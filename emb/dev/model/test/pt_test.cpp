@@ -1,15 +1,18 @@
-#include <emb/dev/part/pt.hpp>
+#include <emb/dev/model/pt.hpp>
 
 #include <emb/math.hpp>
 
 namespace {
 
 using namespace emb::units;
-using emb::dev::part::pt100;
-using emb::dev::part::pt1000;
+using emb::dev::model::pt;
 
 constexpr bool test_pt()
 {
+  // the two resistances IEC 60751 tabulates
+  [[maybe_unused]] pt const pt100{ohm_f32{100.f}};
+  [[maybe_unused]] pt const pt1000{ohm_f32{1000.f}};
+
   // IEC 60751 reference points
   assert(emb::approx(pt100.forward(degree_celsius_f32{0.f}),
                      ohm_f32{100.f},
