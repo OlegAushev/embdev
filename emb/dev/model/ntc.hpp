@@ -43,11 +43,11 @@ struct ntc {
 static_assert(emb::approx(
     ntc{ohm_f32{10'000.f}, 3435.f}.forward(degree_celsius_f32{25.f}),
     ohm_f32{10'000.f},
-    0.01f));
+    ohm_f32{0.01f}));
 static_assert(emb::approx(
     ntc{ohm_f32{10'000.f}, 3435.f}.forward(degree_celsius_f32{100.f}),
     ohm_f32{987.2f},
-    1.f));
+    ohm_f32{1.f}));
 static_assert(emb::approx(
     ntc{ohm_f32{10'000.f}, 3435.f}
         .inverse(ntc{ohm_f32{10'000.f}, 3435.f}.forward(degree_celsius_f32{

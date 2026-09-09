@@ -22,19 +22,20 @@ static_assert(!std::default_initializable<model::pt>);
 
 // IEC 60751 reference points
 static_assert(emb::approx(pt100.forward(degree_celsius_f32{0.f}),
-                          ohm_f32{100.f}));
+                          ohm_f32{100.f},
+                          ohm_f32{1e-3f}));
 static_assert(emb::approx(pt100.forward(degree_celsius_f32{100.f}),
                           ohm_f32{138.51f},
-                          0.01f));
+                          ohm_f32{0.01f}));
 static_assert(emb::approx(pt100.forward(degree_celsius_f32{-60.f}),
                           ohm_f32{76.33f},
-                          0.01f));
+                          ohm_f32{0.01f}));
 static_assert(emb::approx(pt100.forward(degree_celsius_f32{200.f}),
                           ohm_f32{175.86f},
-                          0.01f));
+                          ohm_f32{0.01f}));
 static_assert(emb::approx(pt1000.forward(degree_celsius_f32{150.f}),
                           ohm_f32{1573.25f},
-                          0.1f));
+                          ohm_f32{0.1f}));
 
 // round trip
 static_assert(emb::approx(
