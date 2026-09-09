@@ -1,4 +1,4 @@
-#include <emb/dev/model/ntc.hpp>
+#include <emb/dev/ntc.hpp>
 
 #include <emb/math.hpp>
 
@@ -9,7 +9,7 @@ using namespace emb::units;
 // 10k/3435 device transfer
 [[maybe_unused]] constexpr bool test_ntc()
 {
-  [[maybe_unused]] emb::dev::model::ntc const t{ohm_f32{10'000.f}, 3435.f};
+  [[maybe_unused]] emb::dev::ntc const t{ohm_f32{10'000.f}, 3435.f};
 
   assert(emb::approx(t.forward(degree_celsius_f32{25.f}),
                      ohm_f32{10'000.f},

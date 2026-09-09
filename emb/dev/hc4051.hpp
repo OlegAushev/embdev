@@ -6,7 +6,7 @@
 #include <cstdint>
 #include <utility>
 
-namespace emb::dev::part::hc4051 {
+namespace emb::dev::hc4051 {
 
 // 74HC4051 8:1 analog multiplexer inputs
 enum class input : std::uint8_t { in0, in1, in2, in3, in4, in5, in6, in7 };
@@ -44,4 +44,4 @@ private:
   }
 };
 
-} // namespace emb::dev::part::hc4051
+} // namespace emb::dev::hc4051

@@ -3,7 +3,7 @@
 #include <algorithm>
 #include <array>
 
-namespace emb::dev::part::ntclg100e2 {
+namespace emb::dev::ntclg100e2 {
 
 using RValues = std::array<float, 49>;
 
@@ -35,4 +35,4 @@ constexpr RValues calculate_resistance_values(float r25)
   return v;
 }
 
-} // namespace emb::dev::part::ntclg100e2
+} // namespace emb::dev::ntclg100e2

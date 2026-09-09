@@ -16,7 +16,7 @@
 #include <span>
 #include <utility>
 
-namespace emb::dev::part::fm25w256 {
+namespace emb::dev::fm25w256 {
 
 enum class opcode_command : std::uint8_t {
   write_enable = 0x06,
@@ -217,4 +217,4 @@ private:
   }
 };
 
-} // namespace emb::dev::part::fm25w256
+} // namespace emb::dev::fm25w256

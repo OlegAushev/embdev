@@ -4,7 +4,7 @@
 
 #include <cmath>
 
-namespace emb::dev::model {
+namespace emb::dev {
 
 // NTC thermistor, beta-equation model:
 //   R(T) = R25 * exp(beta * (1/T - 1/T25)),  T in kelvin, T25 = 298.15 K
@@ -34,4 +34,4 @@ struct ntc {
   }
 };
 
-} // namespace emb::dev::model
+} // namespace emb::dev

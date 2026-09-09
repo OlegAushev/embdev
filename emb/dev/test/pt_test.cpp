@@ -1,11 +1,11 @@
-#include <emb/dev/model/pt.hpp>
+#include <emb/dev/pt.hpp>
 
 #include <emb/math.hpp>
 
 namespace {
 
 using namespace emb::units;
-using emb::dev::model::pt;
+using emb::dev::pt;
 
 constexpr bool test_pt()
 {

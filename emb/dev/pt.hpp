@@ -3,7 +3,7 @@
 #include <emb/math.hpp>
 #include <emb/units.hpp>
 
-namespace emb::dev::model {
+namespace emb::dev {
 
 // Platinum RTD per IEC 60751 (alpha = 3.851e-3), Callendar-Van Dusen transfer:
 //   R(T) = R0 * (1 + A*T + B*T^2)                       0 <= T <= 850 degC
@@ -43,4 +43,4 @@ struct pt {
   }
 };
 
-} // namespace emb::dev::model
+} // namespace emb::dev
