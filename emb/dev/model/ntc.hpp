@@ -1,6 +1,5 @@
 #pragma once
 
-#include <emb/math.hpp>
 #include <emb/units.hpp>
 
 #include <cmath>
@@ -33,36 +32,5 @@ struct ntc {
     return degree_celsius_f32{1.f / Tk_inv - kelvin_offset};
   }
 };
-
-// ---- compile-time self-test (device transfer only, 10k/3435 example) ----
-
-// gcc constant-folds exp/log in constant expressions; clang (i.e. clangd)
-// cannot yet, so the checks run only under the build compiler.
-#if !defined(__clang__)
-
-static_assert(emb::approx(
-    ntc{ohm_f32{10'000.f}, 3435.f}.forward(degree_celsius_f32{25.f}),
-    ohm_f32{10'000.f},
-    ohm_f32{0.01f}));
-static_assert(emb::approx(
-    ntc{ohm_f32{10'000.f}, 3435.f}.forward(degree_celsius_f32{100.f}),
-    ohm_f32{987.2f},
-    ohm_f32{1.f}));
-static_assert(emb::approx(
-    ntc{ohm_f32{10'000.f}, 3435.f}
-        .inverse(ntc{ohm_f32{10'000.f}, 3435.f}.forward(degree_celsius_f32{
-            -40.f}))
-        .value(),
-    -40.f,
-    0.05f));
-static_assert(emb::approx(
-    ntc{ohm_f32{10'000.f}, 3435.f}
-        .inverse(ntc{ohm_f32{10'000.f}, 3435.f}.forward(degree_celsius_f32{
-            150.f}))
-        .value(),
-    150.f,
-    0.05f));
-
-#endif
 
 } // namespace emb::dev::model

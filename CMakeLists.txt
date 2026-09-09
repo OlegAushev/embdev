@@ -1,9 +1,8 @@
-# Header-only for now: INTERFACE rather than OBJECT, which cannot be given an
-# empty source list. The first .cpp makes this an OBJECT target with
-# `PRIVATE build_config` attached by the consuming project, as emblib is.
-add_library(embdev INTERFACE)
+file(GLOB_RECURSE sources CONFIGURE_DEPENDS
+    ${CMAKE_CURRENT_SOURCE_DIR}/emb/*.cpp)
 
-# PUBLIC would be an error on an INTERFACE target; this propagates
-# `#include <emb/dev/...>` to consumers all the same.
-target_include_directories(embdev INTERFACE
+add_library(embdev OBJECT ${sources})
+
+# PUBLIC propagates `#include <emb/dev/...>` to consumers.
+target_include_directories(embdev PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR})

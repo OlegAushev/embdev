@@ -2,7 +2,6 @@
 
 #include <emb/dev/model/proportional.hpp>
 
-#include <emb/math.hpp>
 #include <emb/units.hpp>
 
 #include <concepts>
@@ -27,35 +26,5 @@ inline constexpr model::proportional tkc600{amp_f32{600.f}, volt_f32{4.f}};
 // the state is supplied from outside -- not default-constructed in transform
 static_assert(!std::default_initializable<model::proportional<amp_f32,
                                                               volt_f32>>);
-
-// ==== compile-time self-test (device transfer only) ====
-
-// datasheet rated points, exact by construction
-static_assert(emb::approx(tkc600.forward(amp_f32{600.f}),
-                          volt_f32{4.f},
-                          volt_f32{1e-4f}));
-static_assert(emb::approx(tkc600.forward(amp_f32{-600.f}),
-                          volt_f32{-4.f},
-                          volt_f32{1e-4f}));
-static_assert(emb::approx(tkc600.forward(amp_f32{0.f}),
-                          volt_f32{0.f},
-                          volt_f32{1e-4f}));
-static_assert(emb::approx(tkc100.forward(amp_f32{50.f}),
-                          volt_f32{2.f},
-                          volt_f32{1e-4f}));
-static_assert(emb::approx(tkc50.inverse(volt_f32{2.f}),
-                          amp_f32{25.f},
-                          amp_f32{1e-2f}));
-
-// round trip across the measuring range
-static_assert(emb::approx(tkc600.inverse(tkc600.forward(amp_f32{900.f})),
-                          amp_f32{900.f},
-                          amp_f32{1e-2f}));
-static_assert(emb::approx(tkc600.inverse(tkc600.forward(amp_f32{-37.5f})),
-                          amp_f32{-37.5f},
-                          amp_f32{1e-2f}));
-static_assert(emb::approx(tkc300.inverse(tkc300.forward(amp_f32{-900.f})),
-                          amp_f32{-900.f},
-                          amp_f32{1e-2f}));
 
 } // namespace emb::dev::part
