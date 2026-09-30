@@ -20,7 +20,7 @@ struct pt {
   constexpr emb::units::ohm_f32
   forward(emb::units::degree_celsius_f32 temp) const
   {
-    float const t = temp.value();
+    float const t = temp.value;
     float rn = 1.f + (A + B * t) * t;
     if (t < 0.f) {
       rn += C * (t - 100.f) * t * t * t;

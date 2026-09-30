@@ -23,7 +23,7 @@ struct ntc {
   constexpr emb::units::ohm_f32
   forward(emb::units::degree_celsius_f32 temp) const
   {
-    float const Tk = temp.value() + kelvin_offset;
+    float const Tk = temp.value + kelvin_offset;
     return R25 * std::exp(Beta * (1.f / Tk - 1.f / T25));
   }
 

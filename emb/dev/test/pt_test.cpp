@@ -32,23 +32,23 @@ constexpr bool test_pt()
 
   // round trip
   assert(emb::approx(
-      pt100.inverse(pt100.forward(degree_celsius_f32{25.f})).value(),
+      pt100.inverse(pt100.forward(degree_celsius_f32{25.f})).value,
       25.f,
       0.01f));
   assert(emb::approx(
-      pt100.inverse(pt100.forward(degree_celsius_f32{-60.f})).value(),
+      pt100.inverse(pt100.forward(degree_celsius_f32{-60.f})).value,
       -60.f,
       0.01f));
   assert(emb::approx(
-      pt1000.inverse(pt1000.forward(degree_celsius_f32{219.f})).value(),
+      pt1000.inverse(pt1000.forward(degree_celsius_f32{219.f})).value,
       219.f,
       0.01f));
   assert(emb::approx(
-      pt100.inverse(pt100.forward(degree_celsius_f32{-200.f})).value(),
+      pt100.inverse(pt100.forward(degree_celsius_f32{-200.f})).value,
       -200.f,
       0.05f));
   assert(emb::approx(
-      pt100.inverse(pt100.forward(degree_celsius_f32{850.f})).value(),
+      pt100.inverse(pt100.forward(degree_celsius_f32{850.f})).value,
       850.f,
       0.05f));
 

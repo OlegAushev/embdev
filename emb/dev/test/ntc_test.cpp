@@ -19,10 +19,10 @@ using namespace emb::units;
                      ohm_f32{1.f}));
 
   // round trip across the operating range
-  assert(emb::approx(t.inverse(t.forward(degree_celsius_f32{-40.f})).value(),
+  assert(emb::approx(t.inverse(t.forward(degree_celsius_f32{-40.f})).value,
                      -40.f,
                      0.05f));
-  assert(emb::approx(t.inverse(t.forward(degree_celsius_f32{150.f})).value(),
+  assert(emb::approx(t.inverse(t.forward(degree_celsius_f32{150.f})).value,
                      150.f,
                      0.05f));
 
