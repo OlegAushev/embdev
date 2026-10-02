@@ -93,8 +93,7 @@ public:
 
   explicit fram(Dev& dev) : dev_(dev) {}
 
-  auto read(addr_type addr, std::span<std::byte> buf)
-      -> std::expected<void, error>
+  std::expected<void, error> read(addr_type addr, std::span<std::byte> buf)
   {
     if (buf.empty() || !in_range(addr, buf.size())) {
       return refuse(reason::invalid_argument);
@@ -107,8 +106,8 @@ public:
     return emb::spi::read_bytes(dev_, buf).transform_error(from_bus);
   }
 
-  auto write(addr_type addr, std::span<std::byte const> buf)
-      -> std::expected<void, error>
+  std::expected<void, error> write(addr_type addr,
+                                   std::span<std::byte const> buf)
   {
     if (buf.empty() || !in_range(addr, buf.size())) {
       return refuse(reason::invalid_argument);
@@ -126,7 +125,7 @@ public:
   // Ferroelectric memory has no erased state, so this is an overwrite with
   // erased_value — which is exactly what the contract asks for: bring the
   // range to the value a scan reads as "nothing was written here".
-  auto erase(addr_type addr, std::size_t size) -> std::expected<void, error>
+  std::expected<void, error> erase(addr_type addr, std::size_t size)
   {
     if (size == 0 || !in_range(addr, size)) {
       return refuse(reason::invalid_argument);
@@ -166,8 +165,8 @@ private:
     return (std::size_t{addr} <= capacity) && (size <= capacity - addr);
   }
 
-  static constexpr auto command(opcode_command op, addr_type addr)
-      -> std::array<std::byte, 3>
+  static constexpr std::array<std::byte, 3> command(opcode_command op,
+                                                    addr_type addr)
   {
     addr = addr & max_addr;
     return {std::byte(std::to_underlying(op)),
@@ -180,7 +179,7 @@ private:
     return {reason::bus, cause};
   }
 
-  static auto refuse(reason why) -> std::unexpected<error>
+  static std::unexpected<error> refuse(reason why)
   {
     return std::unexpected(error{why, std::nullopt});
   }
@@ -189,7 +188,7 @@ private:
   // itself after every completed write, and a part that is protected or
   // not answering will not take it. Two transactions, because the part
   // wants the enable ended before it will report the latch.
-  auto enable_writes() -> std::expected<void, error>
+  std::expected<void, error> enable_writes()
   {
     {
       auto const cmd = std::array{
@@ -204,7 +203,7 @@ private:
     return {};
   }
 
-  auto read_status_register() -> std::expected<status_register, error>
+  std::expected<status_register, error> read_status_register()
   {
     auto const cmd =
         std::array{std::byte(std::to_underlying(opcode_command::read_sr))};
