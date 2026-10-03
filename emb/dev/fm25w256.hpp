@@ -74,7 +74,7 @@ public:
   static constexpr std::size_t capacity = 0x8000;
   static constexpr addr_type max_addr = 0x7FFF;
 
-  // What emb::nvm::some_block_storage asks of a medium. Ferroelectric RAM
+  // What emb::nvm::some_storage asks of a medium. Ferroelectric RAM
   // writes bytes in place, so there is no granularity to respect and no
   // erase step before a write. `erased_value` is a convention rather than a
   // hardware state — erase() writes it, so an explicit wipe leaves the same
