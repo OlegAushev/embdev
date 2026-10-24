@@ -102,7 +102,7 @@ public:
     auto const header = command(opcode_command::read, addr);
 
     emb::spi::selection const cs{dev_, cs_timing};
-    TRY(emb::spi::write_bytes(dev_, header).transform_error(from_bus));
+    EMB_TRY(emb::spi::write_bytes(dev_, header).transform_error(from_bus));
     return emb::spi::read_bytes(dev_, buf).transform_error(from_bus);
   }
 
@@ -113,12 +113,12 @@ public:
       return refuse(reason::invalid_argument);
     }
 
-    TRY(enable_writes());
+    EMB_TRY(enable_writes());
 
     auto const header = command(opcode_command::write, addr);
 
     emb::spi::selection const cs{dev_, cs_timing};
-    TRY(emb::spi::write_bytes(dev_, header).transform_error(from_bus));
+    EMB_TRY(emb::spi::write_bytes(dev_, header).transform_error(from_bus));
     return emb::spi::write_bytes(dev_, buf).transform_error(from_bus);
   }
 
@@ -131,7 +131,7 @@ public:
       return refuse(reason::invalid_argument);
     }
 
-    TRY(enable_writes());
+    EMB_TRY(enable_writes());
 
     auto const header = command(opcode_command::write, addr);
 
@@ -139,12 +139,12 @@ public:
     // address once and walks it, so the filler is streamed a chunk at a
     // time rather than held whole.
     emb::spi::selection const cs{dev_, cs_timing};
-    TRY(emb::spi::write_bytes(dev_, header).transform_error(from_bus));
+    EMB_TRY(emb::spi::write_bytes(dev_, header).transform_error(from_bus));
 
     for (auto left = size; left > 0;) {
       auto const n = std::min(left, filler.size());
-      TRY(emb::spi::write_bytes(dev_, std::span{filler}.first(n))
-              .transform_error(from_bus));
+      EMB_TRY(emb::spi::write_bytes(dev_, std::span{filler}.first(n))
+                  .transform_error(from_bus));
       left -= n;
     }
     return {};
@@ -194,10 +194,10 @@ private:
       auto const cmd = std::array{
           std::byte(std::to_underlying(opcode_command::write_enable))};
       emb::spi::selection const cs{dev_, cs_timing};
-      TRY(emb::spi::write_bytes(dev_, cmd).transform_error(from_bus));
+      EMB_TRY(emb::spi::write_bytes(dev_, cmd).transform_error(from_bus));
     }
 
-    if (auto const sr = TRY(read_status_register()); !sr.wel) {
+    if (auto const sr = EMB_TRY(read_status_register()); !sr.wel) {
       return refuse(reason::write_disabled);
     }
     return {};
@@ -210,8 +210,8 @@ private:
     std::array<std::byte, 1> sr{};
 
     emb::spi::selection const cs{dev_, cs_timing};
-    TRY(emb::spi::write_bytes(dev_, cmd).transform_error(from_bus));
-    TRY(emb::spi::read_bytes(dev_, sr).transform_error(from_bus));
+    EMB_TRY(emb::spi::write_bytes(dev_, cmd).transform_error(from_bus));
+    EMB_TRY(emb::spi::read_bytes(dev_, sr).transform_error(from_bus));
     return std::bit_cast<status_register>(sr[0]);
   }
 };
