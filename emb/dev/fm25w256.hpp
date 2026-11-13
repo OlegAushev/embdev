@@ -2,7 +2,7 @@
 
 #include <emb/expected.hpp>
 #include <emb/nvm/storage.hpp>
-#include <emb/spi.hpp>
+#include <emb/spi/device.hpp>
 
 #include <algorithm>
 #include <array>
