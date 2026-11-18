@@ -1,9 +1,11 @@
 #pragma once
 
+#include <emb/meta/enum_info.hpp>
 #include <emb/meta/same_as_any.hpp>
 
 #include <concepts>
 #include <cstdint>
+#include <span>
 
 namespace emb::dev::contactors {
 
@@ -11,6 +13,15 @@ enum class position : std::uint8_t {
   open,
   closed
 };
+
+consteval std::span<emb::enumerator_info<position> const> enum_info_of(position)
+{
+  static constexpr emb::enumerator_info<position> info[] = {
+      {position::open, "open", {"Open", "Разомкнут"}},
+      {position::closed, "closed", {"Closed", "Замкнут"}},
+  };
+  return info;
+}
 
 enum class signal : std::uint8_t {
   inactive,
