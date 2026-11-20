@@ -4,6 +4,8 @@
 #include <emb/dev/hall/sector.hpp>
 #include <emb/units.hpp>
 
+#include <bit>
+#include <cstdint>
 #include <expected>
 
 namespace emb::dev::hall {
@@ -16,13 +18,13 @@ struct calibration_result {
                                    calibration_result const&) = default;
 };
 
-// A calibrated angle lies in [`min_calibration_angle`,
-// `max_calibration_angle`).
 inline constexpr emb::units::edeg_f32 min_calibration_angle{0.0f};
-inline constexpr emb::units::edeg_f32 max_calibration_angle{360.0f};
+// The largest representable float below one electrical revolution.
+inline constexpr emb::units::edeg_f32 max_calibration_angle{
+    std::bit_cast<float>(std::bit_cast<std::uint32_t>(360.0f) - 1u)};
 
 // Checks that `data` describes a usable geometry: every angle lies in
-// [`min_calibration_angle`, `max_calibration_angle`), and the six angles of
+// [`min_calibration_angle`, `max_calibration_angle`], and the six angles of
 // each direction differ. Returns `error::invalid_calibration` if not. The
 // order of the sectors is not checked.
 constexpr std::expected<void, error> validate(calibration_result const& data)
@@ -31,7 +33,7 @@ constexpr std::expected<void, error> validate(calibration_result const& data)
     auto const& a = angles.data();
     for (auto i = 0uz; i < a.size(); ++i) {
       // written so that NaN fails it too
-      if (!(a[i] >= min_calibration_angle && a[i] < max_calibration_angle)) {
+      if (!(a[i] >= min_calibration_angle && a[i] <= max_calibration_angle)) {
         return false;
       }
       for (auto j = 0uz; j < i; ++j) {

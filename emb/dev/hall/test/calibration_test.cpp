@@ -48,8 +48,8 @@ consteval bool refused_as_invalid_calibration(calibration_result const& data)
 
 static_assert(accepts({fwd, rev}));
 
-// The range is half-open: 0 is in, 360 is out.
 static_assert(accepts(with_fwd(sector::a, deg{0.0f})));
+static_assert(accepts(with_fwd(sector::a, max_calibration_angle)));
 static_assert(refused_as_invalid_calibration(with_fwd(sector::a, deg{360.0f})));
 static_assert(refused_as_invalid_calibration(with_rev(sector::c, deg{-30.0f})));
 
